@@ -56,54 +56,6 @@ No SQL knowledge is required from the end user.
 
 The application follows a multi-stage data-querying pipeline.
 
-┌──────────────────────────┐
-│      User Uploads Data   │
-│ CSV / Excel / JSON / TSV │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│   Dataset Validation     │
-│   Schema Detection       │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│     MySQL Storage        │
-│   Dataset → SQL Table    │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│ Natural Language Query   │
-│ "Show top 5 products"    │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│      Groq LLM API        │
-│ Natural Language → SQL   │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│     MySQL Execution      │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐      
-│    Python-based          │
-│     Calculations         │         
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│ Result Processing        │
-│ Validation + Formatting  │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│ Visualization / Table    │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│   Business-Friendly      │
-│       Response           │
-└──────────────────────────┘
-
 ## ✨ Features
 - Natural Language to SQL
  Converts plain English questions into MySQL queries using Groq's LLM API
