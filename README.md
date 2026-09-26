@@ -19,24 +19,6 @@ Example
 User:
 "What are the top 5 products by revenue?
 
-Application workflow:
-
-Natural Language Question
-          ↓
-LLM interprets the question
-          ↓
-SQL Query Generation
-          ↓
-MySQL Execution
-          ↓
-Result Validation
-          ↓
-Python-based Calculations
-          ↓
-Visualization / Table
-          ↓
-Business-Friendly Answer
-
 🎯 Problem Statement
 Business teams frequently need information from datasets, but not every stakeholder has SQL or programming knowledge.
 
@@ -68,6 +50,59 @@ Upload a dataset.
 - Display the answer in an easy-to-understand format.
 
 No SQL knowledge is required from the end user.
+
+
+⚙️ How It Works
+
+The application follows a multi-stage data-querying pipeline.
+
+┌──────────────────────────┐
+│      User Uploads Data   │
+│ CSV / Excel / JSON / TSV │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│   Dataset Validation     │
+│   Schema Detection       │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│     MySQL Storage        │
+│   Dataset → SQL Table    │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Natural Language Query   │
+│ "Show top 5 products"    │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│      Groq LLM API        │
+│ Natural Language → SQL   │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│     MySQL Execution      │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐      
+│    Python-based          │
+│     Calculations         │         
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Result Processing        │
+│ Validation + Formatting  │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Visualization / Table    │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│   Business-Friendly      │
+│       Response           │
+└──────────────────────────┘
 
 ## ✨ Features
 - Natural Language to SQL
@@ -186,19 +221,14 @@ Responsible for:
 - Secured API keys using environment variables instead of hardcoding
 
 ## 🚀 How to Run Locally
+
 1. Clone the Repository
 
-git clone <your-repository-url>
-cd AI-Powered-Data-Query-Chatbot
-
-2. Install dependencies:
-
-`pip install -r requirements.txt`
+2. Install dependencies:`pip install -r requirements.txt`
 
 3. Create a `.env` file with your `GROQ_API_KEY` and `MYSQL_PASSWORD`
 
-4. Run:
-`streamlit run app.py`
+4. Run:`streamlit run app.py`
 
 
 ⚠️ Limitations
