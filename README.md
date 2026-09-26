@@ -6,6 +6,7 @@ An intelligent, natural-language data analysis chatbot that allows users to uplo
 Built with Python, MySQL, Streamlit, and Groq LLM API, the application is designed to make data exploration accessible to both technical and non-technical users.
 
 🔎 Project Overview
+
 Traditional data analysis often requires users to know SQL or depend on data analysts for even simple questions such as:
 - What was the total revenue?
 - Which category generated the highest sales?
@@ -20,6 +21,7 @@ User:
 "What are the top 5 products by revenue?
 
 🎯 Problem Statement
+
 Business teams frequently need information from datasets, but not every stakeholder has SQL or programming knowledge.
 
 This creates several challenges:
@@ -57,6 +59,7 @@ No SQL knowledge is required from the end user.
 The application follows a multi-stage data-querying pipeline.
 
 ## ✨ Features
+
 - Natural Language to SQL
 
  Converts plain English questions into MySQL queries using Groq's LLM API
@@ -185,6 +188,7 @@ The application consists of four primary layers.
 ## 📁 Project Structure
 
 ## 🔑 Key Technical Challenges Solved
+
 - Fixed LLM hallucination on categorical/boolean columns by injecting real sample values into the prompt
 - Corrected chronological date sorting (charts were defaulting to alphabetical order)
 - Built a fallback system to show data as a table when it's unsuitable for charting
