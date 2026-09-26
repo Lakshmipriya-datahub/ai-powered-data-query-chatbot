@@ -17,6 +17,7 @@ Traditional data analysis often requires users to know SQL or depend on data ana
 - Instead of writing SQL manually, users can simply ask questions in natural language.
 
 Example
+
 User:
 "What are the top 5 products by revenue?
 
