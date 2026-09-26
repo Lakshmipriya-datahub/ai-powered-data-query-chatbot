@@ -58,101 +58,119 @@ The application follows a multi-stage data-querying pipeline.
 
 ## ✨ Features
 - Natural Language to SQL
+
  Converts plain English questions into MySQL queries using Groq's LLM API
+ 
 - Multi-format Data Upload
+
 Supports CSV, Excel, JSON, and TSV files — works with any domain's dataset
+
 - Dynamic Schema Detection
+
 Automatically reads any uploaded dataset's structure — no hardcoding required
+
 - Hallucination Prevention
+
 Dynamically fetches actual column values (e.g., 'Yes'/'No' vs 1/0) to prevent the AI from guessing wrong formats
+
 - Smart Formatting
+
 Auto-detects currency (₹/$), percentages, counts, and ratings for context-appropriate display
+
 - Intelligent Visualization
+
 Automatically picks the right chart type (bar/line/pie) based on data characteristics
+
 - Accurate Insights
+
 Key statistics (max/min/average) are calculated in Python — not by the LLM — to guarantee 100% numerical accuracy
+
 - Dataset Management
+
 Upload, switch between, and delete datasets directly from the UI
+
 - Technical Architecture
+
 The application consists of four primary layers.
 
-1. Presentation Layer
+  1. Presentation Layer
 
-Built using:
+  Built using:
 
-Streamlit
+  Streamlit
 
-Responsible for:
+  Responsible for:
 
-• File upload
+  • File upload
 
-• Dataset selection
+  • Dataset selection
 
-• Chat interface
+  • Chat interface
 
-• Query input
+  • Query input
 
-• Result display
+  • Result display
 
-• Tables/Charts
+  • Tables/Charts
 
-• Dataset management
+  • Dataset management
 
-2. Application Layer
+  2. Application Layer
 
-Built using:
+  Built using:
 
-Python
+  Python
 
-Responsible for:
+  Responsible for:
 
-• Dataset processing
+ • Dataset processing
 
-• Schema detection
+ • Schema detection
 
-• Query orchestration
+ • Query orchestration
 
-• Result processing
+ • Result processing
 
-• Formatting
+ • Formatting
 
-• Visualization decisions
+ • Visualization decisions
 
-• Error handling
+ • Error handling
 
-3. AI Layer
+ 3. AI Layer
 
-Built using:
+ Built using:
 
-Groq API + LLM
+ Groq API + LLM
 
-Responsible for:
+ Responsible for:
 
-• Understanding natural-language questions
+ • Understanding natural-language questions
 
-• Interpreting user intent
+ • Interpreting user intent
 
-• Generating SQL queries
+ • Generating SQL queries
 
-• Using schema and actual-value context
+ • Using schema and actual-value context
 
-4. Data Layer
+ 4. Data Layer
 
-Built using:
+ Built using:
 
-MySQL + SQLAlchemy
+ MySQL + SQLAlchemy
 
-Responsible for:
+ Responsible for:
 
-• Dataset storage
+ • Dataset storage
 
-• SQL execution
+ • SQL execution
 
-• Query results
+ • Query results
 
-• Database connectivity
+ • Database connectivity
 
 ## 🛠️ Tech Stack
+
 - **Backend** : Python, MySQL
 
 - **AI** : Groq API (Llama/OpenAI OSS models)
@@ -164,7 +182,7 @@ Responsible for:
 - **Environment Management** :  python-dotenv
 
 
-📁 Project Structure
+## 📁 Project Structure
 
 ## 🔑 Key Technical Challenges Solved
 - Fixed LLM hallucination on categorical/boolean columns by injecting real sample values into the prompt
@@ -183,8 +201,8 @@ Responsible for:
 4. Run:`streamlit run app.py`
 
 
-⚠️ Limitations
+## ⚠️ Limitations
 
-🔮 Future Enhancements
+## 🔮 Future Enhancements
 
-📌 Conclusion
+## 📌 Conclusion
