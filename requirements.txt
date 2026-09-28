@@ -1,0 +1,9 @@
+streamlit
+mysql-connector-python
+groq
+pandas
+sqlalchemy
+openpyxl
+python-dotenv
+altair
+matplotlib

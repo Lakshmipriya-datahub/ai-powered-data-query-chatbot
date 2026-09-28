@@ -10,6 +10,48 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
+from urllib.parse import quote_plus
+from sqlalchemy import create_engine, inspect, event
+import mysql.connector
+
+def get_config(key, default=None):
+    value = os.getenv(key)
+    if value:
+        return value
+    try:
+        return st.secrets[key]
+    except Exception:
+        return default
+
+DB_HOST = get_config("DB_HOST", "localhost")
+DB_PORT = int(get_config("DB_PORT", "3306"))
+DB_USER = get_config("DB_USER", "root")
+DB_PASSWORD = get_config("DB_PASSWORD")
+DB_NAME = get_config("DB_NAME", "real_world_project")
+USE_SSL = str(get_config("DB_SSL", "false")).lower() == "true"
+
+engine = create_engine(
+    f"mysql+mysqlconnector://{DB_USER}:{quote_plus(DB_PASSWORD)}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
+    connect_args={"ssl_disabled": not USE_SSL},
+)
+
+# Aiven requires a primary key on new tables; relax it so dataset uploads work
+@event.listens_for(engine, "connect")
+def relax_pk_rule(dbapi_conn, record):
+    cur = dbapi_conn.cursor()
+    try:
+        cur.execute("SET SESSION sql_require_primary_key = 0")
+    except Exception:
+        pass
+    finally:
+        cur.close()
+
+db_connection = mysql.connector.connect(
+    host=DB_HOST, port=DB_PORT, user=DB_USER,
+    password=DB_PASSWORD, database=DB_NAME,
+    ssl_disabled=not USE_SSL,
+)
+
 def choose_chart_type(labels, values, question):
     """Intelligently pick the best chart type based on data characteristics"""
     question_lower = question.lower()
@@ -192,20 +234,11 @@ st.markdown("""
 # Setup connections
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-db_connection = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password = os.getenv("MYSQL_PASSWORD"),
-    database="real_world_project"
-)
 
 from sqlalchemy import create_engine, inspect
 
 from urllib.parse import quote_plus
 
-MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
-encoded_password = quote_plus(MYSQL_PASSWORD)
-engine = create_engine(f"mysql+mysqlconnector://root:{encoded_password}@localhost/real_world_project")
 
 def get_all_tables():
     """List all tables currently in the database"""
