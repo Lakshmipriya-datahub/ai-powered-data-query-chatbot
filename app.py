@@ -17,9 +17,9 @@ import mysql.connector
 def get_config(key, default=None):
     value = os.getenv(key)
     if value:
-        return value
+        return value.strip()
     try:
-        return st.secrets[key]
+        return str(st.secrets[key]).strip()
     except Exception:
         return default
 
@@ -30,7 +30,9 @@ DB_PASSWORD = get_config("DB_PASSWORD")
 DB_NAME = get_config("DB_NAME", "real_world_project")
 USE_SSL = str(get_config("DB_SSL", "false")).lower() == "true"
 
-st.write("DEBUG - DB_HOST:", repr(DB_HOST), "| DB_PASSWORD set:", bool(DB_PASSWORD))
+st.write("DEBUG - DB_HOST repr:", repr(DB_HOST))
+st.write("DEBUG - DB_HOST length:", len(DB_HOST))
+st.write("DEBUG - DB_PORT:", repr(DB_PORT))
 engine = create_engine(
     f"mysql+mysqlconnector://{DB_USER}:{quote_plus(DB_PASSWORD)}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
     connect_args={"ssl_disabled": not USE_SSL},
@@ -47,11 +49,6 @@ def relax_pk_rule(dbapi_conn, record):
     finally:
         cur.close()
 
-db_connection = mysql.connector.connect(
-    host=DB_HOST, port=DB_PORT, user=DB_USER,
-    password=DB_PASSWORD, database=DB_NAME,
-    ssl_disabled=not USE_SSL,
-)
 
 def choose_chart_type(labels, values, question):
     """Intelligently pick the best chart type based on data characteristics"""
