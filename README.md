@@ -59,6 +59,49 @@ No SQL knowledge is required from the end user.
 
 The application follows a multi-stage data-querying pipeline.
 
+┌──────────────────────────┐
+│      User Uploads Data   │
+│ CSV / Excel / JSON / TSV │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│   Dataset Validation     │
+│   Schema Detection       │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│     MySQL Storage        │
+│   Dataset → SQL Table    │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Natural Language Query   │
+│ "Show top 5 products"    │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│      Groq LLM API        │
+│ Natural Language → SQL   │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│     MySQL Execution      │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Result Processing        │
+│ Validation + Formatting  │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Visualization / Table    │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│   Business-Friendly      │
+│       Response           │
+└──────────────────────────┘
+
 ## ✨ Features
 
 - Natural Language to SQL
@@ -188,6 +231,17 @@ The application consists of four primary layers.
 
 ## 📁 Project Structure
 
+ai-powered-data-query-chatbot/
+├── app.py                 
+│                           
+├── migrate.py             
+├── requirements.txt         
+├── .streamlit/
+│   └── config.toml          
+├── .env                     
+├── .gitignore               
+└── README.md
+
 ## 🔑 Key Technical Challenges Solved
 
 - Fixed LLM hallucination on categorical/boolean columns by injecting real sample values into the prompt
@@ -208,6 +262,38 @@ The application consists of four primary layers.
 
 ## ⚠️ Limitations
 
+- Charts work only on aggregated (GROUP BY-style) results — raw row-level data falls back to a table view
+  
+- No multi-table joins — one dataset queried at a time
+
+- No conversational memory — each question is independent, no follow-up context
+
+- Free-tier cloud DB can sleep after inactivity, causing a brief delay on reconnect
+
+- Occasional imperfect SQL on highly complex or ambiguous questions
+
+- No per-user authentication — upload/delete access is shared by anyone with the link
+
 ## 🔮 Future Enhancements
 
+- [ ] Add user authentication so each person has their own private datasets and query history
+
+- [ ] Support multi-table joins so questions can span more than one uploaded dataset
+
+- [ ] Add conversational memory for natural follow-up questions
+
+- [ ] Support scatter plots and histograms for row-level (non-aggregated) data analysis
+
+- [ ] Cache repeated queries to reduce LLM API calls and speed up response time
+
+- [ ] Export chat results, charts, and insights as a downloadable PDF report
+
+- [ ] Move to a persistent (paid-tier) cloud database to eliminate cold-start delays
+
+- [ ] Add role-based access so only the owner can upload/delete datasets
+
 ## 📌 Conclusion
+
+This project started as a simple idea — let anyone ask questions about data in plain English — but turned into a hands-on lesson in building something close to production quality: handling real LLM failure modes (hallucination, arithmetic errors), debugging subtle library behaviors (chart sorting, SQL dialect quirks), managing secrets safely across local and cloud environments, and shipping a working, publicly deployed app end-to-end.
+
+It's not a toy demo built on one fixed dataset — it was tested across genuinely unrelated domains (retail orders, movie revenue, job market data, coffee shop sales) to prove the "any dataset" claim holds up in practice. There's a clear list of what it doesn't do yet, and that honesty is intentional: knowing a system's limitations is as important as knowing its features.
