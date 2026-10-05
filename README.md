@@ -55,52 +55,23 @@ Upload a dataset.
 No SQL knowledge is required from the end user.
 
 
-⚙️ How It Works
+Application workflow:
 
-The application follows a multi-stage data-querying pipeline.
-
-┌──────────────────────────┐
-│      User Uploads Data   │
-│ CSV / Excel / JSON / TSV │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│   Dataset Validation     │
-│   Schema Detection       │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│     MySQL Storage        │
-│   Dataset → SQL Table    │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│ Natural Language Query   │
-│ "Show top 5 products"    │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│      Groq LLM API        │
-│ Natural Language → SQL   │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│     MySQL Execution      │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│ Result Processing        │
-│ Validation + Formatting  │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│ Visualization / Table    │
-└────────────┬─────────────┘
-             ↓
-┌──────────────────────────┐
-│   Business-Friendly      │
-│       Response           │
-└──────────────────────────┘
+Natural Language Question
+          ↓
+LLM interprets the question
+          ↓
+SQL Query Generation
+          ↓
+MySQL Execution
+          ↓
+Result Validation
+          ↓
+Python-based Calculations
+          ↓
+Visualization / Table
+          ↓
+Business-Friendly Answer
 
 ## ✨ Features
 
