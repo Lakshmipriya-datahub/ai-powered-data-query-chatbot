@@ -40,7 +40,6 @@ engine = create_engine(
 
 # Aiven requires a primary key on new tables; relax it so dataset uploads work
 @event.listens_for(engine, "connect")
-db_connection = engine.raw_connection()
 def relax_pk_rule(dbapi_conn, record):
     cur = dbapi_conn.cursor()
     try:
@@ -50,7 +49,7 @@ def relax_pk_rule(dbapi_conn, record):
     finally:
         cur.close()
 
-
+db_connection = engine.raw_connection()
 def choose_chart_type(labels, values, question):
     """Intelligently pick the best chart type based on data characteristics"""
     question_lower = question.lower()
