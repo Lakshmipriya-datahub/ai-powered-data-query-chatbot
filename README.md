@@ -55,34 +55,6 @@ Upload a dataset.
 No SQL knowledge is required from the end user.
 
 
-Application workflow:
-
-Natural Language Question
-
-          ↓
-LLM interprets the question
-
-          ↓
-SQL Query Generation
-
-          ↓
-MySQL Execution
-
-          ↓
-Result Validation
-
-          ↓
-Python-based Calculations
-
-          ↓
-
-Visualization / Table
-          
-          ↓
-
-Business-Friendly Answer
-
-
 ## ✨ Features
 
 - Natural Language to SQL
