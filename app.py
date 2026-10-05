@@ -30,9 +30,6 @@ DB_PASSWORD = get_config("DB_PASSWORD")
 DB_NAME = get_config("DB_NAME", "real_world_project")
 USE_SSL = str(get_config("DB_SSL", "false")).lower() == "true"
 
-st.write("DEBUG - DB_HOST repr:", repr(DB_HOST))
-st.write("DEBUG - DB_HOST length:", len(DB_HOST))
-st.write("DEBUG - DB_PORT:", repr(DB_PORT))
 engine = create_engine(
     f"mysql+mysqlconnector://{DB_USER}:{quote_plus(DB_PASSWORD)}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
     connect_args={"ssl_disabled": not USE_SSL},
