@@ -40,6 +40,7 @@ engine = create_engine(
 
 # Aiven requires a primary key on new tables; relax it so dataset uploads work
 @event.listens_for(engine, "connect")
+db_connection = engine.raw_connection()
 def relax_pk_rule(dbapi_conn, record):
     cur = dbapi_conn.cursor()
     try:
@@ -305,10 +306,11 @@ deletable_tables = [t for t in all_tables if t != "orders"]  # protect the main 
 if deletable_tables:
     table_to_delete = st.sidebar.selectbox("Select dataset to delete:", deletable_tables)
     if st.sidebar.button("Delete this dataset", type="secondary"):
-        cursor_del = db_connection.cursor()
-        cursor_del.execute(f"DROP TABLE IF EXISTS `{table_to_delete}`")
+        
+        cursor = db_connection.cursor()
+        cursor.execute(f"DROP TABLE IF EXISTS `{table_to_delete}`")
         db_connection.commit()
-        cursor_del.close()
+        cursor.close()
         st.sidebar.success(f"✅ '{table_to_delete}' deleted! Refresh to update the list.")
 else:
     st.sidebar.info("No extra datasets to delete.")
